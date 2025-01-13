@@ -12,6 +12,10 @@ if [[ -n "$(git status --porcelain)" ]]; then
   echo "Creating PR \"$PR_TITLE\" for branch $BRANCH_NAME"
   git commit -m "$PR_TITLE"
   git push origin $BRANCH_NAME
+
+  # Add a small delay to ensure GitHub registers the new branch
+  sleep 5
+
   gh pr create --title "$PR_TITLE" --body "This is an automated PR to update blog posts"
   gh pr merge --auto --delete-branch --squash "$BRANCH_NAME"
 else
